@@ -1,0 +1,20 @@
+name: Astralis-Chatplugin
+version: 1.0
+main: me.nooeee.Main
+author: Nooeee
+description: "Le plugin de chat du serveur Astralis [RP]"
+api-version: "1.21.1"
+softdepend: [PlaceholderAPI]
+
+permissions:
+  chatplugin.reload:
+    description: Permet d'effectuer la commande reload
+    default: false
+  chatplugin.bypass:
+    description: Allows bypassing global chat requirements
+    default: false
+
+commands:
+  chatplugin:
+    description: Afin de reload le plugin
+    usage: /chatplugin [reload|help]
