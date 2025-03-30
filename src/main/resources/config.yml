@@ -1,0 +1,17 @@
+# Configuration des paramètres du chat
+chat-settings:
+  # Settings du chat HRP
+  global:
+    radius: 400
+    format: "&8[&4HRP&8]&r &6%player% &e>&7 %message%"
+  # Settings du chat RP
+  local:
+    radius: 10
+    format: "&8[&9RP&8]&r &3%player% &9>&7&o %message%"
+
+# Messages du plugin
+messages:
+  reloaded: "&eConfiguration reload."
+  error:
+    args: "&cArguments invalides."
+    permission: "&cVous n'avez pas la permission d'effectuer cette commande."
