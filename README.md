@@ -1,5 +1,5 @@
 # ChatPlugin for Astralis [RP]
-## [En cours de création:hourglass:]
+## [En cours de création ⌛]
 
 __Liste de commandes__ : 
 - **/me** : action RolePlay
