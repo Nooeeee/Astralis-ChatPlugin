@@ -7,6 +7,6 @@ __Liste de commandes__ :
 - **/offchat** : Désactive le chat HRP (Global)
 
 __Liste de système__ : 
-- **Chat [HRP]** : Chat HRP d'une distance de *400* blocks (modifiable via config.yml)
+- **Chat [HRP]** : Chat HRP d'une distance de *400* blocs (modifiable via config.yml)
 - **Narration [RP]** : Pour la scénarisation des scènes
 - **Annonce [Pôle]** : Annonce pour les différents pôle *(avec radius)*
