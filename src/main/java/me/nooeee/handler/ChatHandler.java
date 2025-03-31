@@ -48,6 +48,16 @@ public class ChatHandler {
         });
     }
 
+    public void sendAnnonce(Player sender, String message, int radius) {
+        TextComponent formattedMessage = formatMessage(message);
+        for(Player recipient : sender.getWorld().getPlayers()) {
+            if(isPlayerHearChat(sender, recipient, radius)) {
+                recipient.sendMessage(formattedMessage);
+                sender.sendMessage(formattedMessage);
+            }
+        }
+    }
+
     private boolean isPlayerHearChat(Player sender, Audience recipient, int radius) {
         if(recipient instanceof ConsoleCommandSender) {
             return true;
@@ -68,7 +78,10 @@ public class ChatHandler {
             case OTHER -> message;
         };
 
-        String result = formatted.replace("%player%", player.getName())
+        // Convertir le displayName() (Component) en String
+        String playerDisplayName = LEGACY.serialize(player.displayName());
+
+        String result = formatted.replace("%player%", playerDisplayName)
                 .replace("%message%", message != null ? message : "");
 
         if (Main.placeHolderAPI) {

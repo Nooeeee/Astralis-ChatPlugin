@@ -10,11 +10,35 @@ permissions:
   chatplugin.reload:
     description: Permet d'effectuer la commande reload
     default: false
-  chatplugin.bypass:
-    description: Allows bypassing global chat requirements
-    default: false
+  annonce.animation:
+    description: Permet de faire des annonces pour les scenaristes
+    default: op
+  annonce.moderateur:
+    description: Permet de faire des annonces pour les modérateurs
+    default: op
+  annonce.scenariste:
+    description: Permet de faire des annonces pour les scenaristes
+    default: op
 
 commands:
   chatplugin:
     description: Afin de reload le plugin
+    permission: chatplugin.reload
     usage: /chatplugin [reload|help]
+
+  annonceanim:
+    description: Permet de faire des annonces pour les animations
+    usage: /annonceanim <radius> <message>
+    permission: annonce.animation
+    aliases: ["annonce-anim", "annonce-animation", "annonceanimation"]
+
+  annoncemodo:
+    description: Permet de faire des annonces pour la modération
+    usage: /annoncemodo <radius> <message>
+    permission: annonce.moderateur
+    aliases: [ "annonce-modo", "annonce-moderation", "annoncemoderation"]
+  annoncescenar:
+    description: Permet de faire des annonces pour le scénario
+    usage: /annoncescenar <radius> <message>
+    permission: annonce.scenariste
+    aliases: [ "annonce-scenar", "annonce-scenario", "annoncescenario"]

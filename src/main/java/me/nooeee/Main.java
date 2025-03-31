@@ -1,5 +1,6 @@
 package me.nooeee;
 
+import me.nooeee.command.CommandAnnonce;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import me.nooeee.command.Command;
@@ -28,6 +29,15 @@ public class Main extends JavaPlugin {
         // Commands
         Objects.requireNonNull(getCommand("chatplugin")).setExecutor(new Command(ChatHandler.getInstance()));
         Objects.requireNonNull(getCommand("chatplugin")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("annonceanim")).setExecutor(new CommandAnnonce());
+        Objects.requireNonNull(getCommand("annonceanim")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("annoncemodo")).setExecutor(new CommandAnnonce());
+        Objects.requireNonNull(getCommand("annoncemodo")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("annoncescenar")).setExecutor(new CommandAnnonce());
+        Objects.requireNonNull(getCommand("annoncescenar")).setTabCompleter(new TabComplete());
+
+
+
 
         if (!setupPlaceHolderAPI()) {
             getLogger().warning("PlaceHolderAPI not found, local chat will not work!");
