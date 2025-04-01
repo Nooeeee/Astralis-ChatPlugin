@@ -7,11 +7,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class Command implements CommandExecutor {
+public class CommandReload implements CommandExecutor {
 
     private final ChatHandler chatHandler;
 
-    public Command(ChatHandler chatHandler) {
+    public CommandReload(ChatHandler chatHandler) {
         this.chatHandler = chatHandler;
     }
 

@@ -53,7 +53,6 @@ public class ChatHandler {
         for(Player recipient : sender.getWorld().getPlayers()) {
             if(isPlayerHearChat(sender, recipient, radius)) {
                 recipient.sendMessage(formattedMessage);
-                sender.sendMessage(formattedMessage);
             }
         }
     }

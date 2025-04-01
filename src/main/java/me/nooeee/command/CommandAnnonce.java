@@ -27,12 +27,12 @@ public class CommandAnnonce implements CommandExecutor {
         // Trouver le pôle selon la commande (annnonceanim -> Pole.ANIM)
         Pole pole = Pole.fromCommand(command.getName());
         if(pole == null) {
-            sender.sendMessage("§cCommande invalide.");
+            sender.sendMessage(Component.text("Commande invalide.", NamedTextColor.RED));
             return true;
         }
 
-        if(!player.hasPermission(pole.permission)) {
-            sender.sendMessage("§cVous n'avez pas la permission d'effectuer cette commande.");
+        if(!player.hasPermission(pole.permission) && !player.isOp()) {
+            sender.sendMessage(Component.text("Vous n'avez pas la permission d'effectuer cette commande.", NamedTextColor.RED));
             return true;
         }
 
@@ -49,7 +49,7 @@ public class CommandAnnonce implements CommandExecutor {
             ChatHandler.getInstance().sendAnnonce(player, formattedMessage, radius);
 
         } catch(NumberFormatException e) {
-            sender.sendMessage("§cLe radius doit être un nombre.");
+            sender.sendMessage(Component.text("Le radius doit être un nombre.", NamedTextColor.RED));
         }
 
         return true;
