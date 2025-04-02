@@ -21,11 +21,9 @@ public class TabComplete implements TabCompleter {
             if(sender.isOp() || sender.hasPermission("chatplugin.reload")) {
                 suggestions.add("reload");
             }
-
-            return suggestions;
         }
 
-        if(label.startsWith("annonce")) {
+        else if(label.startsWith("annonce")) {
             Pole pole = Pole.fromCommand(command.getName());
 
             if(pole != null && (sender.isOp() || sender.hasPermission(pole.getPermission()))) {
@@ -35,8 +33,26 @@ public class TabComplete implements TabCompleter {
                     case 3 -> List.of("");
                 }
             }
-            return suggestions;
         }
+
+        else if(label.startsWith("broadcast")) {
+            if(sender.isOp() || sender.hasPermission("annonce.broadcast")) {
+                switch(args.length) {
+                    case 1 -> suggestions.add("Message");
+                    case 2 -> List.of("");
+                }
+            }
+        }
+
+        else if(label.startsWith("narration")) {
+            if(sender.isOp() || sender.hasPermission("annonce.narration")) {
+                switch(args.length) {
+                    case 1 -> suggestions.add("Message");
+                    case 2 -> List.of("");
+                }
+            }
+        }
+
         return suggestions;
     }
 }

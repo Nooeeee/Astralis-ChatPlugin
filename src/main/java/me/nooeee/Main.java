@@ -1,10 +1,8 @@
 package me.nooeee;
 
-import me.nooeee.command.CommandAnnonce;
+import me.nooeee.command.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.nooeee.command.CommandReload;
-import  me.nooeee.command.TabComplete;
 import me.nooeee.configuration.Config;
 import me.nooeee.handler.ChatHandler;
 import  me.nooeee.listener.PlayerChat;
@@ -27,14 +25,27 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerChat(ChatHandler.getInstance()), this);
 
         // Commands
+            // Plugin : reload
         Objects.requireNonNull(getCommand("chatplugin")).setExecutor(new CommandReload(ChatHandler.getInstance()));
+
+            // Annonces pôles
+        Objects.requireNonNull(getCommand("annonce-animation")).setExecutor(new CommandAnnonce());
+        Objects.requireNonNull(getCommand("annonce-moderation")).setExecutor(new CommandAnnonce());
+        Objects.requireNonNull(getCommand("annonce-scenariste")).setExecutor(new CommandAnnonce());
+
+            // Annonces globales
+        Objects.requireNonNull(getCommand("broadcast")).setExecutor(new CommandBroadcast());
+        Objects.requireNonNull(getCommand("narration")).setExecutor(new CommandNarration());
+
+        // TabComplete
         Objects.requireNonNull(getCommand("chatplugin")).setTabCompleter(new TabComplete());
-        Objects.requireNonNull(getCommand("annonceanim")).setExecutor(new CommandAnnonce());
-        Objects.requireNonNull(getCommand("annonceanim")).setTabCompleter(new TabComplete());
-        Objects.requireNonNull(getCommand("annoncemodo")).setExecutor(new CommandAnnonce());
-        Objects.requireNonNull(getCommand("annoncemodo")).setTabCompleter(new TabComplete());
-        Objects.requireNonNull(getCommand("annoncescenar")).setExecutor(new CommandAnnonce());
-        Objects.requireNonNull(getCommand("annoncescenar")).setTabCompleter(new TabComplete());
+
+        Objects.requireNonNull(getCommand("annonce-animation")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("annonce-moderation")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("annonce-scenariste")).setTabCompleter(new TabComplete());
+
+        Objects.requireNonNull(getCommand("broadcast")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("narration")).setTabCompleter(new TabComplete());
 
         if (!setupPlaceHolderAPI()) {
             getLogger().warning("PlaceHolderAPI not found, local chat will not work!");

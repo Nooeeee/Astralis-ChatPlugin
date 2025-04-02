@@ -11,34 +11,48 @@ permissions:
     description: Permet d'effectuer la commande reload
     default: false
   annonce.animation:
-    description: Permet de faire des annonces pour les scenaristes
+    description: "[RP] Permet de faire des annonces pour les scenaristes"
     default: op
   annonce.moderateur:
-    description: Permet de faire des annonces pour les modérateurs
+    description: "[HRP] Permet de faire des annonces pour les modérateurs"
     default: op
   annonce.scenariste:
-    description: Permet de faire des annonces pour les scenaristes
+    description: "[RP] Permet de faire des annonces pour les scenaristes"
+    default: op
+  annonce.broadcast:
+    description: "[HRP] Permet de faire des broadcast globals"
+    default: op
+  annonce.narration:
+    description: "[RP] Permet de faire des narrations globales"
     default: op
 
 commands:
   chatplugin:
-    description: Afin de reload le plugin
+    description: "Reload le plugin de chat"
     permission: chatplugin.reload
     usage: /chatplugin [reload|help]
 
-  annonceanim:
-    description: Permet de faire des annonces pour les animations
-    usage: /annonceanim <radius> <message>
+  annonce-animation:
+    description: "[RP] Annonce pour les animations"
+    usage: /annonceanimation <radius> <message>
     permission: annonce.animation
-    aliases: ["annonce-anim", "annonce-animation", "annonceanimation"]
 
-  annoncemodo:
-    description: Permet de faire des annonces pour la modération
-    usage: /annoncemodo <radius> <message>
+  annonce-moderation:
+    description: "[HRP] Permet de faire des annonces pour la modération"
+    usage: /annoncemoderateur <radius> <message>
     permission: annonce.moderateur
-    aliases: [ "annonce-modo", "annonce-moderation", "annoncemoderation"]
-  annoncescenar:
-    description: Permet de faire des annonces pour le scénario
-    usage: /annoncescenar <radius> <message>
+
+  annonce-scenariste:
+    description: "[RP] Annonce pour la scénarisation"
+    usage: /annoncescenariste <radius> <message>
     permission: annonce.scenariste
-    aliases: [ "annonce-scenar", "annonce-scenario", "annoncescenario"]
+
+  broadcast:
+    description: "[HRP] Faire une annonce à la totalité des joueurs connectés"
+    usage: /broadcast <message>
+    permission: annonce.broadcast
+
+  narration:
+    description: "[RP] Faire une narration à la totalité des joueurs connectés"
+    usage: /narration <message>
+    permission: annonce.narration

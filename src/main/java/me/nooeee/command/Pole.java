@@ -1,9 +1,9 @@
 package me.nooeee.command;
 
 public enum Pole {
-    ANIM("anim", "§a[Animation]", "annonce.animation"),
-    MOD("modo", "§6[Modérateur]", "annonce.moderateur"),
-    SCENARISTE("scenar", "§9[Scénariste]", "annonce.scenariste");
+    ANIM("animation", "§a[Animation]", "annonce.animation"),
+    MOD("moderateur", "§6[Modérateur]", "annonce.moderateur"),
+    SCENARISTE("scenariste", "§9[Scénariste]", "annonce.scenariste");
 
     private final String commandName;
     final String prefix;
@@ -19,9 +19,13 @@ public enum Pole {
         return this.permission;
     }
 
+    public String getCommandName() {
+        return this.commandName;
+    }
+
     public static Pole fromCommand(String command) {
         for(Pole pole : values()) {
-            if(command.equalsIgnoreCase("annonce" + pole.commandName)) {
+            if(command.equalsIgnoreCase("annonce-" + pole.commandName)) {
                 return pole;
             }
         }

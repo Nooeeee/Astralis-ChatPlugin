@@ -9,6 +9,10 @@ chat-settings:
     radius: 10
     format: "&8[&9RP&8]&r &3%player% &9>&7&o %message%"
 
+  annonce:
+    narration: "[&2Narration&r] : %message%"
+    broadcast: "[&cBroadcast&r] : %message%"
+
 # Messages du plugin
 messages:
   reloaded: "&eConfiguration reload."

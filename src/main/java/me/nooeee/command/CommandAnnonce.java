@@ -37,7 +37,7 @@ public class CommandAnnonce implements CommandExecutor {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(Component.text("Usage: /annonce" + pole.name().toLowerCase() + " <radius> <message>", NamedTextColor.RED));
+            sender.sendMessage(Component.text("Usage: /annonce-" + pole.name().toLowerCase() + " <radius> <message>", NamedTextColor.RED));
             return true;
         }
 
