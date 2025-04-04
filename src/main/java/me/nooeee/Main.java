@@ -2,7 +2,9 @@ package me.nooeee;
 
 import me.nooeee.command.*;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import net.luckperms.api.LuckPerms;
 import me.nooeee.configuration.Config;
 import me.nooeee.handler.ChatHandler;
 import  me.nooeee.listener.PlayerChat;
@@ -12,6 +14,8 @@ import java.util.Objects;
 public class Main extends JavaPlugin {
     public static JavaPlugin plugin = null;
     public static boolean placeHolderAPI = false;
+    public static boolean luckPermsAPI = false;
+    public static LuckPerms luckPerms;
 
     @Override
     public void onEnable() {
@@ -47,8 +51,12 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("broadcast")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand("narration")).setTabCompleter(new TabComplete());
 
+        // Vérification et activation des dépendances
         if (!setupPlaceHolderAPI()) {
             getLogger().warning("PlaceHolderAPI not found, local chat will not work!");
+        }
+        if(!setupLuckPermsAPI()) {
+            getLogger().warning("LuckPermsAPI not found, prefix in chat will not work!");
         }
 
     }
@@ -60,5 +68,18 @@ public class Main extends JavaPlugin {
 
         placeHolderAPI = true;
         return true;
+    }
+
+    private boolean setupLuckPermsAPI() {
+        if(Bukkit.getPluginManager().getPlugin("LuckPerms") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+        if(provider != null) {
+            luckPerms = provider.getProvider();
+        }
+
+        luckPermsAPI = (luckPerms != null);
+        return luckPermsAPI;
     }
 }

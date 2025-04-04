@@ -7,6 +7,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.luckperms.api.model.user.User;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -72,18 +73,29 @@ public class ChatHandler {
 
     public TextComponent formatMessage(MessageType type, Player player, String message) {
         String formatted = switch (type) {
-            case GLOBAL -> Config.settings.getString("chat-settings.global.format", "%player%: %message%");
-            case LOCAL -> Config.settings.getString("chat-settings.local.format", "%player%: %message%");
+            case GLOBAL -> Config.settings.getString("chat-settings.global.format", "%prefix% %player%: %message%");
+            case LOCAL -> Config.settings.getString("chat-settings.local.format", "%prefix% %player%: %message%");
             case OTHER -> message;
         };
 
-        // Convertir le displayName() (Component) en String
+        // Convertir le prefix & displayName() (Component) en String
+        String prefix = "";
         String playerDisplayName = LEGACY.serialize(player.displayName());
 
-        String result = formatted.replace("%player%", playerDisplayName)
+        if(Main.luckPermsAPI && Main.luckPerms != null) {
+            User user = Main.luckPerms.getUserManager().getUser(player.getUniqueId());
+            if(user != null) {
+                prefix = user.getCachedData().getMetaData().getPrefix();
+                if(prefix == null) prefix = "";
+            }
+        }
+        String result = formatted
+                .replace("%prefix%", prefix)
+                .replace("%player%", playerDisplayName)
                 .replace("%message%", message != null ? message : "");
 
         if (Main.placeHolderAPI) {
+
             result = PlaceholderAPI.setPlaceholders(player, result);
         }
 
