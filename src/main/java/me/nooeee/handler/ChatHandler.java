@@ -78,28 +78,42 @@ public class ChatHandler {
             case OTHER -> message;
         };
 
-        // Convertir le prefix & displayName() (Component) en String
-        String prefix = "";
+        if(type == LOCAL && message != null && message.startsWith("*")) {
+            message = message.substring(1).trim();
+        }
+
         String playerDisplayName = LEGACY.serialize(player.displayName());
 
-        if(Main.luckPermsAPI && Main.luckPerms != null) {
-            User user = Main.luckPerms.getUserManager().getUser(player.getUniqueId());
-            if(user != null) {
-                prefix = user.getCachedData().getMetaData().getPrefix();
-                if(prefix == null) prefix = "";
-            }
-        }
+        String prefix = getPlayerPrefix(player);
+
         String result = formatted
                 .replace("%prefix%", prefix)
                 .replace("%player%", playerDisplayName)
                 .replace("%message%", message != null ? message : "");
 
         if (Main.placeHolderAPI) {
-
             result = PlaceholderAPI.setPlaceholders(player, result);
         }
 
         return LEGACY.deserialize(result);
+    }
+
+    public String getPlayerPrefix(Player player) {
+
+        // Convertir le prefix en string
+        String prefix = "";
+
+        if(Main.luckPermsAPI && Main.luckPerms != null) {
+            User user = Main.luckPerms.getUserManager().getUser(player.getUniqueId());
+            if(user != null) {
+                prefix = user.getCachedData().getMetaData().getPrefix();
+                if(prefix == null) {
+                    prefix = "";
+                }
+            }
+        }
+
+        return prefix;
     }
 
     public TextComponent formatMessage(String message) {

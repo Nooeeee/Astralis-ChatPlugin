@@ -20,15 +20,20 @@ public class PlayerChat implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
         TextComponent message = (TextComponent) event.message();
+        String contentMessage = message.content().trim();
 
-        if(message.content().startsWith("*")) {
-            writeToTheLocalChat(event, player, message);
+        if(contentMessage.startsWith("*")) {
+            if(contentMessage.replace("*", "").trim().isEmpty()) {
+                return;
+            } else {
+                canWriteToLocalChat(event, player, message);
+            }
         } else {
-            writeToTheGlobalChat(event, player, message);
+            canWriteToGlobalChat(event, player, message);
         }
     }
 
-    private void writeToTheGlobalChat(AsyncChatEvent event, Player player, TextComponent message) {
+    private void canWriteToGlobalChat(AsyncChatEvent event, Player player, TextComponent message) {
         if(!player.hasPermission("chatplugin.global") && !player.isOp()) {
             player.sendMessage(chatHandler.formatMessage(Config.settings.getString("messages.error.permission")));
             return;
@@ -37,7 +42,7 @@ public class PlayerChat implements Listener {
         chatHandler.writeToGlobalChat(event, player, message.content());
     }
 
-    private void writeToTheLocalChat(AsyncChatEvent event, Player player, TextComponent message) {
+    private void canWriteToLocalChat(AsyncChatEvent event, Player player, TextComponent message) {
         if(!player.hasPermission("chatplugin.local") && !player.isOp()) {
             player.sendMessage(chatHandler.formatMessage(Config.settings.getString("messages.error.permission")));
             return;

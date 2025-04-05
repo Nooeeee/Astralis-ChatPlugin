@@ -10,7 +10,7 @@ permissions:
   chatplugin.reload:
     description: Permet d'effectuer la commande reload
     default: false
-  annonce.animation:
+  annonce.animateur:
     description: "[RP] Permet de faire des annonces pour les scenaristes"
     default: op
   annonce.moderateur:

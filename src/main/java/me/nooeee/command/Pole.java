@@ -1,8 +1,8 @@
 package me.nooeee.command;
 
 public enum Pole {
-    ANIM("animation", "§a[Animation]", "annonce.animation"),
-    MOD("moderateur", "§6[Modérateur]", "annonce.moderateur"),
+    ANIM("animation", "§a[Animation]", "annonce.animateur"),
+    MOD("moderation", "§6[Modérateur]", "annonce.moderateur"),
     SCENARISTE("scenariste", "§9[Scénariste]", "annonce.scenariste");
 
     private final String commandName;

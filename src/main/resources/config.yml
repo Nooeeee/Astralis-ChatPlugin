@@ -7,7 +7,7 @@ chat-settings:
   # Settings du chat RP
   local:
     radius: 10
-    format: "&8[&9RP&8]&r %prefix% &3%player% &9>&7&o %message%"
+    format: "&9&oAction&r %prefix% &3&o%player% &r&9>&7&o %message%"
 
   annonce:
     narration: "[&2Narration&r] : %message%"
