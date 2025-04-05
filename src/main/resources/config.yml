@@ -3,11 +3,11 @@ chat-settings:
   # Settings du chat HRP
   global:
     radius: 400
-    format: "&8[&4HRP&8]&r &6%player% &e>&7 %message%"
+    format: "&8[&4HRP&8]&r %prefix% &6%player% &e>&7 %message%"
   # Settings du chat RP
   local:
     radius: 10
-    format: "&8[&9RP&8]&r &3%player% &9>&7&o %message%"
+    format: "&8[&9RP&8]&r %prefix% &3%player% &9>&7&o %message%"
 
   annonce:
     narration: "[&2Narration&r] : %message%"
