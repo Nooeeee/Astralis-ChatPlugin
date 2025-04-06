@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static me.nooeee.command.Pole.fromCommand;
@@ -50,6 +52,16 @@ public class TabComplete implements TabCompleter {
                     case 1 -> suggestions.add("Message");
                     case 2 -> List.of("");
                 }
+            }
+        }
+
+        else if(label.startsWith("disablechat")) {
+            if(sender.hasPermission("disablechat.admin")) {
+                if(args.length == 1) {
+                    return Arrays.asList("enable", "disable");
+                }
+
+                return Collections.emptyList();
             }
         }
 

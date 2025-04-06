@@ -29,8 +29,10 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerChat(ChatHandler.getInstance()), this);
 
         // Commands
-            // Plugin : reload
+            // Plugin : Config
         Objects.requireNonNull(getCommand("chatplugin")).setExecutor(new CommandReload(ChatHandler.getInstance()));
+        Objects.requireNonNull(getCommand("disablechat")).setExecutor(new CommandDisabledChat(plugin));
+
 
             // Annonces pôles
         Objects.requireNonNull(getCommand("annonce-animation")).setExecutor(new CommandAnnonce());
@@ -51,6 +53,8 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("broadcast")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand("narration")).setTabCompleter(new TabComplete());
 
+        Objects.requireNonNull(getCommand("disablechat")).setTabCompleter(new TabComplete());
+
         // Vérification et activation des dépendances
         if (!setupPlaceHolderAPI()) {
             getLogger().warning("PlaceHolderAPI not found, local chat will not work!");
@@ -58,7 +62,6 @@ public class Main extends JavaPlugin {
         if(!setupLuckPermsAPI()) {
             getLogger().warning("LuckPermsAPI not found, prefix in chat will not work!");
         }
-
     }
 
     private boolean setupPlaceHolderAPI() {

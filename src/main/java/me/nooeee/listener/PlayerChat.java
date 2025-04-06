@@ -17,24 +17,27 @@ public class PlayerChat implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
-        event.setCancelled(true);
         Player player = event.getPlayer();
+        event.setCancelled(true);
         TextComponent message = (TextComponent) event.message();
         String contentMessage = message.content().trim();
 
-        if(contentMessage.startsWith("*")) {
-            if(contentMessage.replace("*", "").trim().isEmpty()) {
+        if (contentMessage.startsWith("*")) {
+            if (contentMessage.replace("*", "").trim().isEmpty()) {
                 return;
             } else {
                 canWriteToLocalChat(event, player, message);
             }
+        } else if ((!(player.hasPermission("disablechat.admin") || player.hasPermission("disablechat.bypass")) || player.isOp()) && (Config.settings.getBoolean("chat-settings.chat-disabled"))) {
+            player.sendMessage("§cLe chat HRP est actuellement §lDésactivé");
+            return;
         } else {
             canWriteToGlobalChat(event, player, message);
         }
     }
 
     private void canWriteToGlobalChat(AsyncChatEvent event, Player player, TextComponent message) {
-        if(!player.hasPermission("chatplugin.global") && !player.isOp()) {
+        if (!player.hasPermission("chatplugin.global") && !player.isOp()) {
             player.sendMessage(chatHandler.formatMessage(Config.settings.getString("messages.error.permission")));
             return;
         }
@@ -43,7 +46,7 @@ public class PlayerChat implements Listener {
     }
 
     private void canWriteToLocalChat(AsyncChatEvent event, Player player, TextComponent message) {
-        if(!player.hasPermission("chatplugin.local") && !player.isOp()) {
+        if (!player.hasPermission("chatplugin.local") && !player.isOp()) {
             player.sendMessage(chatHandler.formatMessage(Config.settings.getString("messages.error.permission")));
             return;
         }

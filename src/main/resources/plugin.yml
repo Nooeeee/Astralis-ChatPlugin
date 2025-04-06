@@ -7,9 +7,27 @@ api-version: "1.21.1"
 softdepend: [PlaceholderAPI, LuckPermsAPI]
 
 permissions:
-  chatplugin.reload:
-    description: Permet d'effectuer la commande reload
+  astralis.*:
+    description: "Avoir toutes les permissions du plugin Chat."
     default: false
+    children:
+      disablechat.*: true
+      chatplugin.reload: true
+      annonce.*: true
+
+
+  chatplugin.reload:
+    description: "[Config] Permet de recharger la configuration du plugin"
+    default: false
+
+  annonce.*:
+    children:
+      annonce.animateur: true
+      annonce.moderateur: true
+      annonce.scenariste: true
+      annonce.broadcast: true
+      annonce.narration: true
+
   annonce.animateur:
     description: "[RP] Permet de faire des annonces pour les scenaristes"
     default: op
@@ -26,11 +44,29 @@ permissions:
     description: "[RP] Permet de faire des narrations globales"
     default: op
 
+  disablechat.*:
+    children:
+      disablechat.admin: true
+      disablechat.bypass: true
+
+  disablechat.admin:
+    description: "[Config] Permet d'activer ou désactiver le chat HRP"
+    default: false
+  disablechat.bypass:
+    description: "[HRP] Permet de bypass le disablechat"
+    default: false
+
+
 commands:
   chatplugin:
-    description: "Reload le plugin de chat"
+    description: "[Config] Reload le plugin de chat"
     permission: chatplugin.reload
     usage: /chatplugin [reload|help]
+
+  disablechat:
+    description: "[Config] Activer ou désactiver le chat HRP"
+    permission: disablechat.admin
+    usage: /disablechat [enabled|disabled]
 
   annonce-animation:
     description: "[RP] Annonce pour les animations"
