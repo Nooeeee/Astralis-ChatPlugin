@@ -5,6 +5,7 @@ import me.nooeee.Main;
 import me.nooeee.configuration.Config;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.luckperms.api.model.user.User;
@@ -16,7 +17,7 @@ import static me.nooeee.handler.MessageType.*;
 public class ChatHandler {
     private static ChatHandler instance;
     // Permet convertir "&" Minecraft --> component + couleur
-    private final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacyAmpersand();
+    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacyAmpersand();
 
     // private : bloque création via new ChatHandler()...
     private ChatHandler() {
@@ -30,18 +31,18 @@ public class ChatHandler {
     }
 
     // Global : HRP
-    public void writeToGlobalChat(AsyncChatEvent event, Player player, String message) {
+    public static void writeToGlobalChat(AsyncChatEvent event, Player player, String message) {
         int radius = Config.settings.getInt("chat-settings.global.radius", 400);
         sendChatMessage(event, player, message, GLOBAL, radius);
     }
 
     // Local : RP
-    public void writeToLocalChat(AsyncChatEvent event, Player player, String message) {
+    public static void writeToLocalChat(AsyncChatEvent event, Player player, String message) {
         int radius = Config.settings.getInt("chat-settings.local.radius", 10);
         sendChatMessage(event, player, message, LOCAL, radius);
     }
 
-    private void sendChatMessage(AsyncChatEvent event, Player player, String message, MessageType type, int radius) {
+    private static void sendChatMessage(AsyncChatEvent event, Player player, String message, MessageType type, int radius) {
         event.viewers().forEach(recipient -> {
             if(isPlayerHearChat(player, recipient, radius)) {
                 recipient.sendMessage(formatMessage(type, player, message));
@@ -49,7 +50,7 @@ public class ChatHandler {
         });
     }
 
-    public void sendRolePlayMe(Player sender, String message, int radius) {
+    public static void sendRolePlayMe(Player sender, String message, int radius) {
         String formatted = Config.settings.getString("chat-settings.local.format", "%prefix% %player% %message%")
                 .replace("%prefix%", getPlayerPrefix(sender))
                 .replace("%player%", LEGACY.serialize(sender.displayName()))
@@ -68,7 +69,26 @@ public class ChatHandler {
         }
     }
 
-    public void sendAnnonce(Player sender, String message, int radius) {
+    public static void sendRolePlayRoll(Player sender, Component message, int radius) {
+        String formatted = "%prefix% %player% " + LegacyComponentSerializer.legacySection().serialize(message);
+        formatted = formatted
+                .replace("%prefix%", getPlayerPrefix(sender))
+                .replace("%player%", LEGACY.serialize(sender.displayName()));
+
+        if (Main.placeHolderAPI) {
+            formatted = PlaceholderAPI.setPlaceholders(sender, formatted);
+        }
+
+        TextComponent component = LEGACY.deserialize(formatted);
+
+        for (Player recipient : sender.getWorld().getPlayers()) {
+            if(isPlayerHearChat(sender,recipient, radius)) {
+                recipient.sendMessage(component);
+            }
+        }
+    }
+
+    public static void sendAnnonce(Player sender, String message, int radius) {
         TextComponent formattedMessage = formatMessage(message);
         for(Player recipient : sender.getWorld().getPlayers()) {
             if(isPlayerHearChat(sender, recipient, radius)) {
@@ -77,7 +97,7 @@ public class ChatHandler {
         }
     }
 
-    private boolean isPlayerHearChat(Player sender, Audience recipient, int radius) {
+    private static boolean isPlayerHearChat(Player sender, Audience recipient, int radius) {
         if(recipient instanceof ConsoleCommandSender) {
             return true;
         }
@@ -90,7 +110,7 @@ public class ChatHandler {
         return radius <= 0;
     }
 
-    public TextComponent formatMessage(MessageType type, Player player, String message) {
+    public static TextComponent formatMessage(MessageType type, Player player, String message) {
         String formatted = switch (type) {
             case GLOBAL -> Config.settings.getString("chat-settings.global.format", "%prefix% %player%: %message%");
             case LOCAL -> Config.settings.getString("chat-settings.local.format", "%prefix% %player%: %message%");
@@ -113,7 +133,7 @@ public class ChatHandler {
         return LEGACY.deserialize(result);
     }
 
-    public String getPlayerPrefix(Player player) {
+    public static String getPlayerPrefix(Player player) {
 
         // Convertir le prefix en string
         String prefix = "";
@@ -131,7 +151,7 @@ public class ChatHandler {
         return prefix;
     }
 
-    public TextComponent formatMessage(String message) {
+    public static TextComponent formatMessage(String message) {
         return LEGACY.deserialize(message);
     }
 

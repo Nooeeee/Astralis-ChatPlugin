@@ -60,7 +60,8 @@ permissions:
 commands:
   me:
     description: "[RP] Effectuer une action"
-
+  roll:
+    description: "[RP] Faire un nombre entre 0 et 100"
   chatplugin:
     description: "[Config] Reload le plugin de chat"
     permission: chatplugin.reload

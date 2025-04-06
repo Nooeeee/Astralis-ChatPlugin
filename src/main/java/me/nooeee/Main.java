@@ -35,7 +35,7 @@ public class Main extends JavaPlugin {
 
             // Roleplay
         Objects.requireNonNull(getCommand("me")).setExecutor(new CommandMe(ChatHandler.getInstance()));
-
+        Objects.requireNonNull(getCommand("roll")).setExecutor(new CommandRoll());
         
             // Annonces pôles
         Objects.requireNonNull(getCommand("annonce-animation")).setExecutor(new CommandAnnonce());
