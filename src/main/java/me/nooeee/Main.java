@@ -33,7 +33,10 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("chatplugin")).setExecutor(new CommandReload(ChatHandler.getInstance()));
         Objects.requireNonNull(getCommand("disablechat")).setExecutor(new CommandDisabledChat(plugin));
 
+            // Roleplay
+        Objects.requireNonNull(getCommand("me")).setExecutor(new CommandMe(ChatHandler.getInstance()));
 
+        
             // Annonces pôles
         Objects.requireNonNull(getCommand("annonce-animation")).setExecutor(new CommandAnnonce());
         Objects.requireNonNull(getCommand("annonce-moderation")).setExecutor(new CommandAnnonce());

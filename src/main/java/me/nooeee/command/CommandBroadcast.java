@@ -30,6 +30,6 @@ public class CommandBroadcast implements CommandExecutor {
             Component finalMessage = LegacyComponentSerializer.legacyAmpersand().deserialize(formattedMessage);
             Bukkit.broadcast(finalMessage);
         }
-        return true;
+        return false;
     }
 }

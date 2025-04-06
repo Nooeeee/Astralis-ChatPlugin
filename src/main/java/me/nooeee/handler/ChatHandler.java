@@ -49,6 +49,25 @@ public class ChatHandler {
         });
     }
 
+    public void sendRolePlayMe(Player sender, String message, int radius) {
+        String formatted = Config.settings.getString("chat-settings.local.format", "%prefix% %player% %message%")
+                .replace("%prefix%", getPlayerPrefix(sender))
+                .replace("%player%", LEGACY.serialize(sender.displayName()))
+                .replace("%message%", message);
+
+        if (Main.placeHolderAPI) {
+            formatted = PlaceholderAPI.setPlaceholders(sender, formatted);
+        }
+
+        TextComponent component = LEGACY.deserialize(formatted);
+
+        for (Player recipient : sender.getWorld().getPlayers()) {
+            if(isPlayerHearChat(sender,recipient, radius)) {
+                recipient.sendMessage(component);
+            }
+        }
+    }
+
     public void sendAnnonce(Player sender, String message, int radius) {
         TextComponent formattedMessage = formatMessage(message);
         for(Player recipient : sender.getWorld().getPlayers()) {
@@ -82,13 +101,9 @@ public class ChatHandler {
             message = message.substring(1).trim();
         }
 
-        String playerDisplayName = LEGACY.serialize(player.displayName());
-
-        String prefix = getPlayerPrefix(player);
-
         String result = formatted
-                .replace("%prefix%", prefix)
-                .replace("%player%", playerDisplayName)
+                .replace("%prefix%", getPlayerPrefix(player))
+                .replace("%player%", LEGACY.serialize(player.displayName()))
                 .replace("%message%", message != null ? message : "");
 
         if (Main.placeHolderAPI) {

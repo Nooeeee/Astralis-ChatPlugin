@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Logger;
 
 public class CommandDisabledChat implements CommandExecutor {
-    private static final String[] POSSIBLE_VALUES = {"enable", "disable"};
     private final Logger pluginLogger;
 
     public CommandDisabledChat(JavaPlugin plugin) {
@@ -25,32 +24,29 @@ public class CommandDisabledChat implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender.hasPermission("disablechat.admin")) {
             if(args.length == 0) {
+
                 boolean isEnabled = Config.settings.getBoolean("chat-settings.chat-disabled");
-                sender.sendMessage(disableChat(isEnabled));
-                return true;
-
-            } else if (args.length == 1) {
-                if (args[0].equalsIgnoreCase(POSSIBLE_VALUES[0])) {
-                    // Enabled (false dans config)
-                    Config.settings.set("chat-settings.chat-disabled", false);
-
-                } else if (args[0].equalsIgnoreCase(POSSIBLE_VALUES[1])) {
-                    // Disabled (true dans config)
-                    Config.settings.set("chat-settings.chat-disabled", true);
-                } else {
-                    return false;
-                }
+                Config.settings.set("chat-settings.chat-disabled", !isEnabled);
 
                 // Reload le Config.yml
                 Main.plugin.saveConfig();
                 Config.reload();
 
-                boolean newState = !Config.settings.getBoolean("chat-settings.chat-disabled");
-                sender.sendMessage(disableChat(newState));
-                pluginLogger.info("Le chat HRP est désormais " + (newState ? "activé" : "désactivé"));
+                pluginLogger.info("Le chat HRP est désormais " + (!isEnabled ? "activé" : "désactivé"));
+                sender.sendMessage(disableChat(!isEnabled));
+                return true;
 
+            } else if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("info")) {
+
+                    boolean isEnabled = Config.settings.getBoolean("chat-settings.chat-disabled");
+                    sender.sendMessage(disableChat(isEnabled));
+                    return true;
+
+                }
                 return true;
             }
+
         }
         return false;
     }
@@ -59,8 +55,8 @@ public class CommandDisabledChat implements CommandExecutor {
         return Component.text()
                 .content("Le chat HRP est ")
                 .append(Component.text(
-                        isEnabled ? "activé" : "désactivé",
-                        isEnabled ? NamedTextColor.GREEN : NamedTextColor.RED
+                        isEnabled ? "désactivé" : "activé",
+                        isEnabled ? NamedTextColor.RED : NamedTextColor.GREEN
                 ).decorate(TextDecoration.BOLD))
                 .color(NamedTextColor.WHITE) // Couleur texte principal
                 .build();

@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class TabComplete implements TabCompleter {
@@ -55,11 +53,10 @@ public class TabComplete implements TabCompleter {
 
         else if(label.startsWith("disablechat")) {
             if(sender.hasPermission("disablechat.admin")) {
-                if(args.length == 1) {
-                    return Arrays.asList("enable", "disable");
+                switch(args.length) {
+                    case 1 -> suggestions.add("info");
+                    case 2 -> List.of("");
                 }
-
-                return Collections.emptyList();
             }
         }
 

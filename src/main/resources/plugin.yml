@@ -58,6 +58,9 @@ permissions:
 
 
 commands:
+  me:
+    description: "[RP] Effectuer une action"
+
   chatplugin:
     description: "[Config] Reload le plugin de chat"
     permission: chatplugin.reload
@@ -66,7 +69,7 @@ commands:
   disablechat:
     description: "[Config] Activer ou désactiver le chat HRP"
     permission: disablechat.admin
-    usage: /disablechat [enabled|disabled]
+    usage: /disablechat [info]
 
   annonce-animation:
     description: "[RP] Annonce pour les animations"
