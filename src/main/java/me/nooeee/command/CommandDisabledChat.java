@@ -13,8 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Logger;
 
-import static me.nooeee.Main.plugin;
-
 public class CommandDisabledChat implements CommandExecutor {
     private static final String[] POSSIBLE_VALUES = {"enable", "disable"};
     private final Logger pluginLogger;
