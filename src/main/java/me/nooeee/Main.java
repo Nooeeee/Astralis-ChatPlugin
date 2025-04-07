@@ -1,6 +1,7 @@
 package me.nooeee;
 
 import me.nooeee.command.*;
+import me.nooeee.handler.StaffChatPreferences;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +26,9 @@ public class Main extends JavaPlugin {
         saveDefaultConfig();
         Config.initialize();
 
+        // Save Activation/Désactivation du StaffChat
+        StaffChatPreferences.loadFromConfig();
+
         // Listener
         getServer().getPluginManager().registerEvents(new PlayerChat(ChatHandler.getInstance()), this);
 
@@ -32,6 +36,7 @@ public class Main extends JavaPlugin {
             // Plugin : Config
         Objects.requireNonNull(getCommand("chatplugin")).setExecutor(new CommandReload(ChatHandler.getInstance()));
         Objects.requireNonNull(getCommand("disablechat")).setExecutor(new CommandDisabledChat(plugin));
+        Objects.requireNonNull(getCommand("staffchat")).setExecutor(new CommandStaffChat());
 
             // Roleplay
         Objects.requireNonNull(getCommand("me")).setExecutor(new CommandMe(ChatHandler.getInstance()));
@@ -48,6 +53,8 @@ public class Main extends JavaPlugin {
 
         // TabComplete
         Objects.requireNonNull(getCommand("chatplugin")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand(("disablechat"))).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand(("staffchat"))).setTabCompleter(new TabComplete());
 
         Objects.requireNonNull(getCommand("annonce-animation")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand("annonce-moderation")).setTabCompleter(new TabComplete());
@@ -65,6 +72,13 @@ public class Main extends JavaPlugin {
         if(!setupLuckPermsAPI()) {
             getLogger().warning("LuckPermsAPI not found, prefix in chat will not work!");
         }
+    }
+
+    @Override
+    public void onDisable() {
+
+        // Save Activation/Désactivation du StaffChat
+        StaffChatPreferences.saveToConfig();
     }
 
     private boolean setupPlaceHolderAPI() {

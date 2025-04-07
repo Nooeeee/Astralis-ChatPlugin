@@ -13,15 +13,28 @@ public class Config {
      * Initialise et charge la configuration
      */
     public static void initialize() {
+
+        // Crée dossier si inexistant
+        if (!DATA_FOLDER.exists()) {
+            DATA_FOLDER.mkdirs();
+        }
+        // Load config.yml depuis resources si inexistant
         Main.plugin.saveDefaultConfig();
         reload();
     }
 
-    /**
-     * Recharge la configuration depuis config.yml
-     */
+    // Recharge la configuration depuis config.yml
     public static void reload() {
         Main.plugin.reloadConfig();
         settings = Main.plugin.getConfig();
+    }
+
+    // Save le config.yml actuel
+    public static void save() {
+        try {
+            Main.plugin.saveConfig();
+        } catch (Exception e) {
+            Main.plugin.getLogger().severe("Erreur lors de la sauvegarde de config.yml: " + e.getMessage());
+        }
     }
 }

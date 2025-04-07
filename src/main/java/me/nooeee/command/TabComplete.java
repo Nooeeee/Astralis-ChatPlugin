@@ -15,16 +15,16 @@ public class TabComplete implements TabCompleter {
 
         List<String> suggestions = new ArrayList<>();
 
-        if(args.length == 1 && command.getName().equalsIgnoreCase("chatplugin")) {
-            if(sender.isOp() || sender.hasPermission("chatplugin.reload")) {
+        if (args.length == 1 && command.getName().equalsIgnoreCase("chatplugin")) {
+            if (sender.isOp() || sender.hasPermission("chatplugin.reload")) {
                 suggestions.add("reload");
             }
         }
 
-        else if(label.startsWith("annonce")) {
+        else if (label.startsWith("annonce")) {
             Pole pole = Pole.fromCommand(command.getName());
 
-            if(pole != null && (sender.isOp() || sender.hasPermission(pole.getPermission()))) {
+            if (pole != null && (sender.isOp() || sender.hasPermission(pole.getPermission()))) {
                 switch(args.length) {
                     case 1 -> suggestions.add("50");
                     case 2 -> suggestions.add("Message");
@@ -33,31 +33,32 @@ public class TabComplete implements TabCompleter {
             }
         }
 
-        else if(label.startsWith("broadcast")) {
-            if(sender.isOp() || sender.hasPermission("annonce.broadcast")) {
-                switch(args.length) {
-                    case 1 -> suggestions.add("Message");
-                    case 2 -> List.of("");
-                }
+        else if (label.startsWith("broadcast") && (sender.isOp() || sender.hasPermission("annonce.broadcast"))) {
+            switch(args.length) {
+                case 1 -> suggestions.add("Message");
+                case 2 -> List.of("");
             }
         }
 
-        else if(label.startsWith("narration")) {
-            if(sender.isOp() || sender.hasPermission("annonce.narration")) {
-                switch(args.length) {
-                    case 1 -> suggestions.add("Message");
-                    case 2 -> List.of("");
-                }
+        else if (label.startsWith("narration") && (sender.isOp() || sender.hasPermission("annonce.narration"))) {
+            switch(args.length) {
+                case 1 -> suggestions.add("Message");
+                case 2 -> suggestions.clear();
             }
         }
 
-        else if(label.startsWith("disablechat")) {
-            if(sender.hasPermission("disablechat.admin")) {
-                switch(args.length) {
-                    case 1 -> suggestions.add("info");
-                    case 2 -> List.of("");
-                }
+        else if (label.startsWith("disablechat") && sender.hasPermission("disablechat.admin")) {
+            switch(args.length) {
+                case 1 -> suggestions.add("info");
+                case 2 -> List.of("");
             }
+        }
+
+        else if ((label.startsWith("staffchat") || label.startsWith("sc"))
+                && sender.hasPermission("astralis.staff")
+                && args.length == 1) {
+
+            suggestions.addAll(List.of("enabled", "disabled", "message", "on", "off"));
         }
 
         return suggestions;

@@ -7,6 +7,7 @@ api-version: "1.21.1"
 softdepend: [PlaceholderAPI, LuckPermsAPI]
 
 permissions:
+  # Admin perm
   astralis.*:
     description: "Avoir toutes les permissions du plugin Chat."
     default: false
@@ -15,11 +16,12 @@ permissions:
       chatplugin.reload: true
       annonce.*: true
 
-
+  # Reload Config.yml
   chatplugin.reload:
     description: "[Config] Permet de recharger la configuration du plugin"
     default: false
 
+  # All-Perm Annonce-pole
   annonce.*:
     children:
       annonce.animateur: true
@@ -28,6 +30,17 @@ permissions:
       annonce.broadcast: true
       annonce.narration: true
 
+  # All-perm DisabledChat (Talk & Toggle)
+  disablechat.*:
+    children:
+      disablechat.admin: true
+      disablechat.bypass: true
+
+  # ChatStaff
+  astralis.staff:
+    description: ""
+
+  # All Annnonce-pole
   annonce.animateur:
     description: "[RP] Permet de faire des annonces pour les scenaristes"
     default: op
@@ -37,6 +50,8 @@ permissions:
   annonce.scenariste:
     description: "[RP] Permet de faire des annonces pour les scenaristes"
     default: op
+
+  # Global Annonce
   annonce.broadcast:
     description: "[HRP] Permet de faire des broadcast globals"
     default: op
@@ -44,11 +59,7 @@ permissions:
     description: "[RP] Permet de faire des narrations globales"
     default: op
 
-  disablechat.*:
-    children:
-      disablechat.admin: true
-      disablechat.bypass: true
-
+  # All DisableChat
   disablechat.admin:
     description: "[Config] Permet d'activer ou désactiver le chat HRP"
     default: false
@@ -62,6 +73,7 @@ commands:
     description: "[RP] Effectuer une action"
   roll:
     description: "[RP] Faire un nombre entre 0 et 100"
+
   chatplugin:
     description: "[Config] Reload le plugin de chat"
     permission: chatplugin.reload
@@ -71,6 +83,11 @@ commands:
     description: "[Config] Activer ou désactiver le chat HRP"
     permission: disablechat.admin
     usage: /disablechat [info]
+
+  staffchat:
+    description: "[Staff] Parler dans le StaffChat"
+    permission: astralis.staff
+    aliases: [sc]
 
   annonce-animation:
     description: "[RP] Annonce pour les animations"

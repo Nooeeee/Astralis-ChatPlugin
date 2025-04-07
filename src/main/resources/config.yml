@@ -1,18 +1,31 @@
 # Configuration des paramètres du chat
 chat-settings:
   chat-disabled: false
+
   # Settings du chat HRP
   global:
     radius: 400
     format: "&8[&4HRP&8]&r %prefix% %player% &e>&7 %message%"
+
   # Settings du chat RP
   local:
     radius: 10
     format: "&9&oAction&r %prefix% %player% &r&9>&7&o %message%"
 
+  # Narration et Broadcast
   annonce:
     narration: "[&2Narration&r] : %message%"
     broadcast: "[&cBroadcast&r] : %message%"
+
+  # Formats staffChat
+  staff-chat:
+    staffChatFormat: "&6[StaffChat] %prefix% %player% &7▶ %message%"
+    staffChatPlayerDisabled: "&6[StaffChat] %prefix% %player% &7a &cDésactivé&7 son StaffChat !"
+    staffChatPlayerEnabled: "&6[StaffChat] %prefix% %player% &7a &aActivé&7 son StaffChat !"
+    staffChatEnabled: "&8 ▶ &6Staff chat &a&lActivé&7 !"
+    staffChatDisabled: "&8 ▶ &6Staff chat &c&lDésactivé&7 !"
+    disabled-players: []
+
 
 # Messages du plugin
 messages:
