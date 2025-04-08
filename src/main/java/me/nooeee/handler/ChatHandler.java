@@ -18,7 +18,7 @@ import static me.nooeee.handler.MessageType.*;
 public class ChatHandler {
     private static ChatHandler instance;
     // Permet convertir "&" Minecraft --> component + couleur
-    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacyAmpersand();
+    public static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacyAmpersand();
 
     // private : bloque création via new ChatHandler()...
     private ChatHandler() {

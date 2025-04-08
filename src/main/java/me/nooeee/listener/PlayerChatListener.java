@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class PlayerChat implements Listener {
+public class PlayerChatListener implements Listener {
     private final ChatHandler chatHandler;
 
-    public PlayerChat(ChatHandler chatHandler) {
+    public PlayerChatListener(ChatHandler chatHandler) {
         this.chatHandler = chatHandler;
     }
 

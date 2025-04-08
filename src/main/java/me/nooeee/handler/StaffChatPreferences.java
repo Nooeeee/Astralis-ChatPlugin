@@ -22,19 +22,24 @@ public class StaffChatPreferences {
 
     public static void toggleStaffChat(Player player) {
         UUID uuid = player.getUniqueId();
-        boolean isNowEnabled = enabledPlayers.contains(uuid);
+        boolean isNowEnabled = !enabledPlayers.contains(uuid);
+
+        notifyStaffStatusChange(player, isNowEnabled);
 
         if (isNowEnabled) {
             // Désactive Staff Chat
-            enabledPlayers.remove(uuid);
-            sendFormattedMessage(player, Config.settings.getString("chat-settings.staff-chat.staffChatDisabled"));
+            enabledPlayers.add(uuid);
+
         } else {
             // Active Staff Chat
-            enabledPlayers.add(uuid);
-            sendFormattedMessage(player, Config.settings.getString("chat-settings.staff-chat.staffChatEnabled"));
+            enabledPlayers.remove(uuid);
         }
 
-        notifyStaffStatusChange(player, !isNowEnabled);
+        String message = isNowEnabled
+                ? Config.settings.getString("chat-settings.staff-chat.staffChatEnabled")
+                : Config.settings.getString("chat-settings.staff-chat.staffChatDisabled");
+
+        sendFormattedMessage(player, message);
     }
 
     public static boolean staffChatIsEnabled(Player player) {
@@ -48,7 +53,7 @@ public class StaffChatPreferences {
 
         String message = formatMessage(player, Config.settings.getString(configPath));
         Bukkit.getOnlinePlayers().stream()
-                .filter(recipient -> recipient.hasPermission("astralis.staff"))
+                .filter(recipient -> recipient.hasPermission("astralis.staff") && !recipient.equals(player))
                 .forEach(recipient -> recipient.sendMessage(LEGACY.deserialize(message)));
 
         Bukkit.getConsoleSender().sendMessage(LEGACY.deserialize(message));
@@ -71,13 +76,14 @@ public class StaffChatPreferences {
     }
 
     public static void saveToConfig() {
-        Config.settings.set("staff-chat.disabled-players", enabledPlayers.stream().map(UUID::toString).toList());
+        Config.settings.set("chat-settings.staff-chat.enabled-players",
+                enabledPlayers.stream().map(UUID::toString).toList());
         Config.save();
     }
 
     public static void loadFromConfig() {
         enabledPlayers.clear();
-        Config.settings.getStringList("staff-chat.disabled-players")
+        Config.settings.getStringList("chat-settings.staff-chat.enabled-players")
                 .forEach(uuid -> enabledPlayers.add(UUID.fromString(uuid)));
     }
 }

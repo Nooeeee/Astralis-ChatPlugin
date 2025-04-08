@@ -34,29 +34,40 @@ public class CommandStaffChat implements CommandExecutor {
                 || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off")) {
 
             boolean desiredState = args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("enabled");
-            boolean currentState = staffChatIsEnabled(player);
 
-            if (desiredState == currentState) {
-                String message = desiredState ?
-                        "§6Ton StaffChat est déjà §a§lactivé"
+            if (desiredState == staffChatIsEnabled(player)) {
+                String message = desiredState
+                        ? "§6Ton StaffChat est déjà §a§lactivé"
                         : "§6Ton StaffChat est déjà §c§ldésactivé";
                 player.sendMessage(message);
                 return true;
             }
 
+            notifyStaffStatusChange(player, desiredState);
+
             if (desiredState) {
                 enabledPlayers.add(player.getUniqueId());
-                sendFormattedMessage(player, Config.settings.getString("chat-settings.staff-chat.staffChatEnabled"));
             } else {
                 enabledPlayers.remove(player.getUniqueId());
-                sendFormattedMessage(player, Config.settings.getString("chat-settings.staff-chat.staffChatDisabled"));
             }
-            notifyStaffStatusChange(player, desiredState);
+
+            String message = desiredState
+                    ? Config.settings.getString("chat-settings.staff-chat.staffChatEnabled")
+                    : Config.settings.getString("chat-settings.staff-chat.staffChatDisabled");
+
+            sendFormattedMessage(player, message);
+
             return true;
         }
 
-        String message = String.join(" ", args);
-        sendStaffMessage(player, message);
+        if (staffChatIsEnabled(player)) {
+            String message = String.join(" ", args);
+            sendStaffMessage(player, message);
+        } else {
+            player.sendMessage("§cVotre Staff chat n'est pas activé !");
+            return true;
+        }
+
 
         return true;
     }

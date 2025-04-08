@@ -2,13 +2,14 @@ package me.nooeee;
 
 import me.nooeee.command.*;
 import me.nooeee.handler.StaffChatPreferences;
+import me.nooeee.listener.JoinLeaveListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.luckperms.api.LuckPerms;
 import me.nooeee.configuration.Config;
 import me.nooeee.handler.ChatHandler;
-import  me.nooeee.listener.PlayerChat;
+import me.nooeee.listener.PlayerChatListener;
 
 import java.util.Objects;
 
@@ -30,7 +31,8 @@ public class Main extends JavaPlugin {
         StaffChatPreferences.loadFromConfig();
 
         // Listener
-        getServer().getPluginManager().registerEvents(new PlayerChat(ChatHandler.getInstance()), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatListener(ChatHandler.getInstance()), this);
+        getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
 
         // Commands
             // Plugin : Config

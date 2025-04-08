@@ -39,6 +39,7 @@ permissions:
   # ChatStaff
   astralis.staff:
     description: ""
+    default: op
 
   # All Annnonce-pole
   annonce.animateur:

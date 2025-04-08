@@ -24,12 +24,13 @@ chat-settings:
     staffChatPlayerEnabled: "&6[StaffChat] %prefix% %player% &7a &aActivé&7 son StaffChat !"
     staffChatEnabled: "&8 ▶ &6Staff chat &a&lActivé&7 !"
     staffChatDisabled: "&8 ▶ &6Staff chat &c&lDésactivé&7 !"
-    disabled-players: []
+    enabled-players: []
 
-
-# Messages du plugin
+# Messages erreurs du chat plugin
 messages:
   reloaded: "&eConfiguration reload."
+  join: "[&a+&r] %player%"
+  leave: "[&c-&r] %player%"
   error:
     args: "&cArguments invalides."
     permission: "&cVous n'avez pas la permission d'effectuer cette commande."
