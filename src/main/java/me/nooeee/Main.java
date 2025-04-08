@@ -13,6 +13,8 @@ import me.nooeee.listener.PlayerChatListener;
 
 import java.util.Objects;
 
+import static me.nooeee.configuration.StatusManager.loadStatus;
+
 public class Main extends JavaPlugin {
     public static JavaPlugin plugin = null;
     public static boolean placeHolderAPI = false;
@@ -30,6 +32,9 @@ public class Main extends JavaPlugin {
         // Save Activation/Désactivation du StaffChat
         StaffChatPreferences.loadFromConfig();
 
+        // [Statuts] Sauvegarde
+        loadStatus();
+
         // Listener
         getServer().getPluginManager().registerEvents(new PlayerChatListener(ChatHandler.getInstance()), this);
         getServer().getPluginManager().registerEvents(new JoinLeaveListener(), this);
@@ -43,7 +48,10 @@ public class Main extends JavaPlugin {
             // Roleplay
         Objects.requireNonNull(getCommand("me")).setExecutor(new CommandMe(ChatHandler.getInstance()));
         Objects.requireNonNull(getCommand("roll")).setExecutor(new CommandRoll());
-        
+
+        // [PAYANT] Statut
+        Objects.requireNonNull(getCommand("statut")).setExecutor(new CommandStatut());
+
             // Annonces pôles
         Objects.requireNonNull(getCommand("annonce-animation")).setExecutor(new CommandAnnonce());
         Objects.requireNonNull(getCommand("annonce-moderation")).setExecutor(new CommandAnnonce());
@@ -104,4 +112,5 @@ public class Main extends JavaPlugin {
         luckPermsAPI = (luckPerms != null);
         return luckPermsAPI;
     }
+
 }
