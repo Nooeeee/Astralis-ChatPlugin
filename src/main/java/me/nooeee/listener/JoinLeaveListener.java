@@ -15,11 +15,16 @@ public class JoinLeaveListener implements Listener {
     private static final String JOIN_MESSAGE_PATH = "messages.join";
     private static final String QUIT_MESSAGE_PATH = "messages.leave";
 
-    private static final String DEFAULT_JOIN_MESSAGE = "♣ %player% a rejoint Clover ! ✔";
-    private static final String DEFAULT_QUIT_MESSAGE = "♣ %player% est parti de Clover ! ✘";
+    private static final String DEFAULT_JOIN_MESSAGE = "&a♣ &r%player% a rejoint Clover ! ✔";
+    private static final String DEFAULT_QUIT_MESSAGE = "&c♣ &r%player% est parti de Clover ! ✘";
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        if (!Config.settings.getBoolean("join-leave", true)) {
+            event.joinMessage(null);
+            return;
+        }
+
         Player player = event.getPlayer();
 
         String sysMessage = Config.settings.getString(JOIN_MESSAGE_PATH, DEFAULT_JOIN_MESSAGE);
@@ -30,6 +35,11 @@ public class JoinLeaveListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
+        if (!Config.settings.getBoolean("join-leave", true)) {
+            event.quitMessage(null);
+            return;
+        }
+
         Player player = event.getPlayer();
 
         String sysMessage = Config.settings.getString(QUIT_MESSAGE_PATH, DEFAULT_QUIT_MESSAGE);

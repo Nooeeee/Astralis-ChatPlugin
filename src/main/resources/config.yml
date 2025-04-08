@@ -1,3 +1,6 @@
+# Message de connexion et de déconnexion (true: activé / false: désactivé)
+join-leave: true
+
 # Configuration des paramètres du chat
 chat-settings:
   chat-disabled: false
@@ -29,8 +32,9 @@ chat-settings:
 # Messages erreurs du chat plugin
 messages:
   reloaded: "&eConfiguration reload."
-  join: "[&a+&r] %player%"
-  leave: "[&c-&r] %player%"
+  join: "&a♣ &r%player% a rejoint Clover !"
+  leave: "&c♣ &r%player% est parti de Clover !"
   error:
     args: "&cArguments invalides."
     permission: "&cVous n'avez pas la permission d'effectuer cette commande."
+
