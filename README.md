@@ -8,9 +8,9 @@ __Liste de commandes__ :
 - **``/annonce-pole <radius> <message>``** : Annonce pour les différents pôle *(avec radius)*.
 - **``/narration <message>``** : [RP] Envoie d’un message à tous les joueurs connectés.
 - **``/broadcast <message>``** : [HRP] Envoie d’un message à tous les joueurs connectés.
-- **``/chatstaff <message>``** : [STAFF] Envoie d’un message à tous les staff connectés.
+- **``/staffchat <message>``** : [STAFF] Envoie d’un message à tous les staff connectés.
 
 __Liste de système__ :
 - **Chat [HRP]** : Chat HRP d'une distance de *400 à 500* blocs.
 - **Chat [RP]** : Chat RP d'une distance de 10 blocs (Accessible en commençant le message avec '*').
-- **Chat [STAFF]** : Chat réservé aux staffs (accessible via /chatstaff).
+- **Chat [STAFF]** : Chat réservé aux staffs (accessible via /staffchat on).
