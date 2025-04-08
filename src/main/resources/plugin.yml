@@ -15,6 +15,7 @@ permissions:
       disablechat.*: true
       chatplugin.reload: true
       annonce.*: true
+      statut: true
 
   # Reload Config.yml
   chatplugin.reload:
@@ -35,6 +36,11 @@ permissions:
     children:
       disablechat.admin: true
       disablechat.bypass: true
+
+  # Status de connexion (Payant)
+  statut:
+    description: "[PAYANT] Autorise le changement de status de connexion"
+    default: false
 
   # ChatStaff
   astralis.staff:
@@ -84,6 +90,11 @@ commands:
     description: "[Config] Activer ou désactiver le chat HRP"
     permission: disablechat.admin
     usage: /disablechat [info]
+
+  statut:
+    description: "Changer son status de connexion"
+    permission: join-statut
+    usage: /status <message>
 
   staffchat:
     description: "[Staff] Parler dans le StaffChat"
