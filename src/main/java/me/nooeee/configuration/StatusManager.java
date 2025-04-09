@@ -2,7 +2,10 @@ package me.nooeee.configuration;
 
 import me.nooeee.Main;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -19,27 +22,45 @@ public class StatusManager {
 
     public static void loadStatus() {
         Main.plugin.getServer().getAsyncScheduler().runNow(Main.plugin, task -> {
-            // Crée le fichier si inexistant
-            if (!STATUS_FILE.exists()) {
-                try {
+            try {
+                // Crée le fichier si inexistant
+                if (!STATUS_FILE.exists()) {
+
+                    STATUS_FILE.getParentFile().mkdirs();
                     STATUS_FILE.createNewFile();
-                } catch (IOException e) {
-                    Main.plugin.getLogger().severe("Erreur lors de la création du status.yml: " + e.getMessage());
-                    return;
                 }
+
+                // Charger la config
+                statusConfig = YamlConfiguration.loadConfiguration(STATUS_FILE);
+
+                if (!statusConfig.contains("players")) {
+                    statusConfig.createSection("players");
+                    statusConfig.save(STATUS_FILE);
+                }
+
+                // Remplir le cache (Ssi section existe)
+                ConfigurationSection playersSection = statusConfig.getConfigurationSection("players");
+                if (playersSection != null) {
+                    playersSection.getKeys(false).forEach(uuidStr -> {
+                        try {
+                            UUID uuid = UUID.fromString(uuidStr);
+                            String legacyText = playersSection.getString(uuidStr);
+                            if (legacyText != null) {
+                                statusCache.put(uuid, LegacyComponentSerializer.legacySection().deserialize(legacyText));
+                            }
+                        } catch (IllegalArgumentException e) {
+                            Main.plugin.getLogger().warning("UUID invalide dans status.yml: " + e.getMessage());
+                        }
+                    });
+                }
+
+                Main.plugin.getComponentLogger()
+                        .info(Component.text(statusCache.size() + " status chargés ", NamedTextColor.AQUA)
+                                .append(Component.text("(Astralis-ChatPlugin)", NamedTextColor.YELLOW)));
+
+            } catch (IOException e) {
+                Main.plugin.getLogger().severe("Erreur lors du chargement de status.yml: " + e.getMessage());
             }
-
-            // Charger la config
-            statusConfig = YamlConfiguration.loadConfiguration(STATUS_FILE);
-
-            // Remplir le cache
-            statusConfig.getConfigurationSection("players").getKeys(false).forEach(uuidStr -> {
-                UUID uuid = UUID.fromString(uuidStr);
-                String legacyText = statusConfig.getString("players." + uuidStr);
-                statusCache.put(uuid, LegacyComponentSerializer.legacySection().deserialize(legacyText));
-            });
-
-            Main.plugin.getLogger().info(statusCache.size() + " status chargés (Astralis-ChatPlugin)");
         });
     }
 

@@ -1,7 +1,6 @@
 package me.nooeee.command;
 
 import me.nooeee.configuration.Config;
-import me.nooeee.handler.StaffChatPreferences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
@@ -9,8 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 import static me.nooeee.handler.ChatHandler.sendStaffMessage;
 import static me.nooeee.handler.StaffChatPreferences.*;
