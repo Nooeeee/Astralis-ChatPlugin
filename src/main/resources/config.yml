@@ -34,6 +34,7 @@ messages:
   reloaded: "&eConfiguration reload."
   join: "&a♣ &r%player% a rejoint Clover !"
   leave: "&c♣ &r%player% est parti de Clover !"
+  statut-format: "&7[&a+&7] &r%player% : &9%status%"
   error:
     args: "&cArguments invalides."
     permission: "&cVous n'avez pas la permission d'effectuer cette commande."

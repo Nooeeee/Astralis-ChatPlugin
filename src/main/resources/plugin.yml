@@ -40,7 +40,7 @@ permissions:
   # Status de connexion (Payant)
   statut:
     description: "[PAYANT] Autorise le changement de status de connexion"
-    default: false
+    default: op
 
   # ChatStaff
   astralis.staff:
@@ -92,9 +92,9 @@ commands:
     usage: /disablechat [info]
 
   statut:
-    description: "Changer son status de connexion"
+    description: "Changer son statut de connexion"
     permission: join-statut
-    usage: /status <message>
+    usage: /statut <message>
 
   staffchat:
     description: "[Staff] Parler dans le StaffChat"
