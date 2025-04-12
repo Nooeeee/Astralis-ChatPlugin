@@ -76,31 +76,37 @@ permissions:
 
 
 commands:
-  me:
-    description: "[RP] Effectuer une action"
-  roll:
-    description: "[RP] Faire un nombre entre 0 et 100"
-
+  # Plugin : Config
   chatplugin:
     description: "[Config] Reload le plugin de chat"
     permission: chatplugin.reload
-    usage: /chatplugin [reload|help]
+    usage: /chatplugin reload
 
   disablechat:
     description: "[Config] Activer ou désactiver le chat HRP"
     permission: disablechat.admin
     usage: /disablechat [info]
 
-  statut:
-    description: "Changer son statut de connexion"
-    permission: join-statut
-    usage: /statut <message>
-
   staffchat:
     description: "[Staff] Parler dans le StaffChat"
     permission: astralis.staff
     aliases: [sc]
 
+  # Roleplay
+  anonyme:
+    description: "[RP] Effectuer une action anonymement"
+  me:
+    description: "[RP] Effectuer une action"
+  roll:
+    description: "[RP] Faire un nombre entre 0 et 100"
+
+  # [PAYANT] Statut (Dispo pour OP)
+  statut:
+    description: "Changer son statut de connexion"
+    permission: join-statut
+    usage: /statut <message>
+
+  # Annonces pôles
   annonce-animation:
     description: "[RP] Annonce pour les animations"
     usage: /annonceanimation <radius> <message>
@@ -108,7 +114,7 @@ commands:
 
   annonce-moderation:
     description: "[HRP] Permet de faire des annonces pour la modération"
-    usage: /annoncemoderateur <radius> <message>
+    usage: /annoncemoderation <radius> <message>
     permission: annonce.moderateur
 
   annonce-scenariste:
@@ -116,6 +122,7 @@ commands:
     usage: /annoncescenariste <radius> <message>
     permission: annonce.scenariste
 
+  # Annonces globales
   broadcast:
     description: "[HRP] Faire une annonce à la totalité des joueurs connectés"
     usage: /broadcast <message>

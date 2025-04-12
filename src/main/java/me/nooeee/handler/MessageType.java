@@ -4,7 +4,7 @@ import me.nooeee.configuration.Config;
 
 public enum MessageType {
     GLOBAL(ConfigKey.GLOBAL_FORMAT),
-    LOCAL(ConfigKey.LOCAL_FORMAT),
+    ROLEPLAY(ConfigKey.ROLEPLAY_FORMAT),
     OTHER(null);
 
     private final ConfigKey configKey;
@@ -20,7 +20,7 @@ public enum MessageType {
     // enum pour la configuration
     private enum ConfigKey {
         GLOBAL_FORMAT("global-format"),
-        LOCAL_FORMAT("local-format");
+        ROLEPLAY_FORMAT("roleplay-format");
 
         final String key;
         ConfigKey(String key) {

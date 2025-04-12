@@ -11,9 +11,10 @@ chat-settings:
     format: "&8[&4HRP&8]&r %prefix% %player% &e>&7 %message%"
 
   # Settings du chat RP
-  local:
+  roleplay:
     radius: 10
     format: "&9&oAction&r %prefix% %player% &r&9>&7&o %message%"
+    anonyme: "&8&oAnonyme : &7&o%message%"
 
   # Narration et Broadcast
   annonce:
@@ -34,7 +35,7 @@ messages:
   reloaded: "&eConfiguration reload."
   join: "&a♣ &r%player% a rejoint Clover !"
   leave: "&c♣ &r%player% est parti de Clover !"
-  statut-format: "&7[&a+&7] &r%player% : &9%status%"
+  statut-format: "&7[&a+&7] &8%player% : &9%status%"
   error:
     args: "&cArguments invalides."
     permission: "&cVous n'avez pas la permission d'effectuer cette commande."
