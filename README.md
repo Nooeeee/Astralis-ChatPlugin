@@ -1,16 +1,26 @@
 # Plugin *Astralis* : __[Chat]__
 __Liste de commandes__ :
+
+**_Plugin : Config_**
+- **``/chatplugin reload``** : reload le fichier config.yml du plugin.
+- **``/disablechat <enabled/disabled>``** : Désactive/Réactive le chat HRP (enabled : chat HRP on / disabled : chat HRP off).
+- **``/staffchat <message>``** : [STAFF] Envoie d’un message à tous les staff connectés.
+
+**_RolePlay_**
 - **``/me``** : action RolePlay
 - **``/roll``** : roulette de 0 à 100
-- **``/disablechat <enabled/disabled>``** : Désactive/Réactive le chat HRP (enabled : chat HRP on / disabled : chat HRP off).
-- **``/annonce-pole <radius> <message>``** : Annonce pour les différents pôle *(avec radius)*.
+
+- **``/statut <info/message> [player]``** : *[PAYANT]* Personnalise le message de connexion du joueur. (OP sont permis aussi).
+
+**_Annonces_**
+- **``/annonce-pole <radius> <message>``** : Annonce pour les différents pôles *(avec radius)*.
 - **``/narration <message>``** : [RP] Envoie d’un message à tous les joueurs connectés.
 - **``/broadcast <message>``** : [HRP] Envoie d’un message à tous les joueurs connectés.
-- **``/staffchat <message>``** : [STAFF] Envoie d’un message à tous les staff connectés.
-- **``/statut <info/message> [player]``** : [PAYANT] Personnalise le message de connexion du joueur. (OP sont permis aussi).
+
 
 __Liste de système__ :
-- **Chat [HRP]** : Chat HRP d'une distance de *400 à 500* blocs.
+- **Chat [HRP]** : Chat HRP d'une distance de *400* blocs.
 - **Chat [RP]** : Chat RP d'une distance de 10 blocs (Accessible en commençant le message avec '*').
-- **Chat [STAFF]** : Chat réservé aux staffs (accessible via /chatstaff).
+- **Chat [STAFF]** : Chat réservé aux staffs (accessible via /staffchat ou /sc).
 - **Join/Leave [Message]** : Envoie un message lors de la connexion/déconnexion du joueur.
+- **Statut _[Payant]_** : Modifier le message de connexion s'affichant lors de sa connexion au serveur.
