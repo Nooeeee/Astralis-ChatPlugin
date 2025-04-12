@@ -19,7 +19,7 @@ public class JoinLeaveListener implements Listener {
 
     private static final String DEFAULT_JOIN_MESSAGE = "&a♣ &r%player% a rejoint Clover ! ✔";
     private static final String DEFAULT_QUIT_MESSAGE = "&c♣ &r%player% est parti de Clover ! ✘";
-    private static final String STATUS_DEFAULT_JOIN_MESSAGE = "&7[&a+&7] &r%player% : &9%status%";
+    private static final String STATUS_DEFAULT_JOIN_MESSAGE = "&7[&a+&7] &8%player% : &9%status%";
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

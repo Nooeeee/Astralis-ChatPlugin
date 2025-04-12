@@ -37,10 +37,10 @@ public class ChatHandler {
         sendChatMessage(event, player, message, GLOBAL, radius);
     }
 
-    // Envoyer les messages dans le chat Local : RP
-    public static void writeToLocalChat(AsyncChatEvent event, Player player, String message) {
-        int radius = Config.settings.getInt("chat-settings.local.radius", 10);
-        sendChatMessage(event, player, message, LOCAL, radius);
+    // Envoyer les messages dans le chat roleplay : RP
+    public static void writeToRoleplayChat(AsyncChatEvent event, Player player, String message) {
+        int radius = Config.settings.getInt("chat-settings.roleplay.radius", 10);
+        sendChatMessage(event, player, message, ROLEPLAY, radius);
     }
 
     // Envoyer dans le Chat Staff
@@ -65,15 +65,29 @@ public class ChatHandler {
     // Envoi du message à tous les joueurs à proximité
     private static void sendChatMessage(AsyncChatEvent event, Player player, String message, MessageType type, int radius) {
         event.viewers().forEach(recipient -> {
-            if(isPlayerHearChat(player, recipient, radius)) {
+            if (isPlayerHearChat(player, recipient, radius)) {
                 recipient.sendMessage(formatMessage(type, player, message));
             }
         });
     }
 
+    // Pour la commande : /anonyme
+    public static void sendRolePlayAnonyme(Player sender, String message, int radius) {
+        String formatted = Config.settings.getString("chat-settings.roleplay.anonyme")
+                .replace("%message%", message);
+
+        Component component = LEGACY.deserialize(formatted);
+
+        for (Player recipient : sender.getWorld().getPlayers()) {
+            if (isPlayerHearChat(sender, recipient, radius)) {
+                recipient.sendMessage(component);
+            }
+        }
+    }
+
     // Pour la commande : /me
     public static void sendRolePlayMe(Player sender, String message, int radius) {
-        String formatted = Config.settings.getString("chat-settings.local.format", "%prefix% %player% %message%")
+        String formatted = Config.settings.getString("chat-settings.roleplay.format", "%prefix% %player% %message%")
                 .replace("%prefix%", getPlayerPrefix(sender))
                 .replace("%player%", getPlayerDisplay(sender))
                 .replace("%message%", message);
@@ -82,10 +96,10 @@ public class ChatHandler {
             formatted = PlaceholderAPI.setPlaceholders(sender, formatted);
         }
 
-        TextComponent component = LEGACY.deserialize(formatted);
+        Component component = LEGACY.deserialize(formatted);
 
         for (Player recipient : sender.getWorld().getPlayers()) {
-            if(isPlayerHearChat(sender,recipient, radius)) {
+            if (isPlayerHearChat(sender,recipient, radius)) {
                 recipient.sendMessage(component);
             }
         }
@@ -102,10 +116,10 @@ public class ChatHandler {
             formatted = PlaceholderAPI.setPlaceholders(sender, formatted);
         }
 
-        TextComponent component = LEGACY.deserialize(formatted);
+        Component component = LEGACY.deserialize(formatted);
 
         for (Player recipient : sender.getWorld().getPlayers()) {
-            if(isPlayerHearChat(sender,recipient, radius)) {
+            if (isPlayerHearChat(sender,recipient, radius)) {
                 recipient.sendMessage(component);
             }
         }
@@ -113,9 +127,9 @@ public class ChatHandler {
 
     // Pour la commande : /annonce-pole (ex /annonce-animation
     public static void sendAnnonce(Player sender, String message, int radius) {
-        TextComponent formattedMessage = formatMessage(message);
-        for(Player recipient : sender.getWorld().getPlayers()) {
-            if(isPlayerHearChat(sender, recipient, radius)) {
+        Component formattedMessage = formatMessage(message);
+        for (Player recipient : sender.getWorld().getPlayers()) {
+            if (isPlayerHearChat(sender, recipient, radius)) {
                 recipient.sendMessage(formattedMessage);
             }
         }
@@ -123,11 +137,11 @@ public class ChatHandler {
 
     // Boolean pour récup les joueurs à proximités
     private static boolean isPlayerHearChat(Player sender, Audience recipient, int radius) {
-        if(recipient instanceof ConsoleCommandSender) {
+        if (recipient instanceof ConsoleCommandSender) {
             return true;
         }
 
-        if(radius > 0 && recipient instanceof Player receiver) {
+        if (radius > 0 && recipient instanceof Player receiver) {
             return sender.getWorld().equals(receiver.getWorld()) &&
                     sender.getLocation().distanceSquared(receiver.getLocation()) <= (radius * radius);
         }
@@ -136,15 +150,15 @@ public class ChatHandler {
     }
 
 
-    // Formatter le message via son type (global, local) + prefix et displayName
-    public static TextComponent formatMessage(MessageType type, Player player, String message) {
+    // Formatter le message via son type (global, roleplay) + prefix et displayName
+    public static Component formatMessage(MessageType type, Player player, String message) {
         String formatted = switch (type) {
             case GLOBAL -> Config.settings.getString("chat-settings.global.format", "%prefix% %player%: %message%");
-            case LOCAL -> Config.settings.getString("chat-settings.local.format", "%prefix% %player%: %message%");
+            case ROLEPLAY -> Config.settings.getString("chat-settings.roleplay.format", "%prefix% %player%: %message%");
             case OTHER -> message;
         };
 
-        if(type == LOCAL && message != null && message.startsWith("*")) {
+        if (type == ROLEPLAY && message != null && message.startsWith("*")) {
             message = message.substring(1).trim();
         }
 
@@ -169,11 +183,11 @@ public class ChatHandler {
         // Convertir le prefix en string
         String prefix = "";
 
-        if(Main.luckPermsAPI && Main.luckPerms != null) {
+        if (Main.luckPermsAPI && Main.luckPerms != null) {
             User user = Main.luckPerms.getUserManager().getUser(player.getUniqueId());
-            if(user != null) {
+            if (user != null) {
                 prefix = user.getCachedData().getMetaData().getPrefix();
-                if(prefix == null) {
+                if (prefix == null) {
                     prefix = "";
                 }
             }
@@ -182,7 +196,7 @@ public class ChatHandler {
         return prefix;
     }
 
-    public static TextComponent formatMessage(String message) {
+    public static Component formatMessage(String message) {
         return LEGACY.deserialize(message);
     }
 

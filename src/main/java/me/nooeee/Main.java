@@ -3,6 +3,7 @@ package me.nooeee;
 import me.nooeee.command.*;
 import me.nooeee.handler.StaffChatPreferences;
 import me.nooeee.listener.JoinLeaveListener;
+import me.nooeee.listener.TabComplete;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +47,7 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("staffchat")).setExecutor(new CommandStaffChat());
 
             // Roleplay
+        Objects.requireNonNull(getCommand("anonyme")).setExecutor(new CommandAnonyme(ChatHandler.getInstance()));
         Objects.requireNonNull(getCommand("me")).setExecutor(new CommandMe(ChatHandler.getInstance()));
         Objects.requireNonNull(getCommand("roll")).setExecutor(new CommandRoll());
 
@@ -62,22 +64,33 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("narration")).setExecutor(new CommandNarration());
 
         // TabComplete
+            // Plugin : Config
         Objects.requireNonNull(getCommand("chatplugin")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand(("disablechat"))).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand(("staffchat"))).setTabCompleter(new TabComplete());
 
+            // Roleplay
+        Objects.requireNonNull(getCommand("anonyme")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("me")).setTabCompleter(new TabComplete());
+        Objects.requireNonNull(getCommand("roll")).setTabCompleter(new TabComplete());
+
+            // [PAYANT] Statut
+        Objects.requireNonNull(getCommand("statut")).setTabCompleter(new TabComplete());
+
+
+            // Annonces pôles
         Objects.requireNonNull(getCommand("annonce-animation")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand("annonce-moderation")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand("annonce-scenariste")).setTabCompleter(new TabComplete());
 
+            // Annonces globales
         Objects.requireNonNull(getCommand("broadcast")).setTabCompleter(new TabComplete());
         Objects.requireNonNull(getCommand("narration")).setTabCompleter(new TabComplete());
 
-        Objects.requireNonNull(getCommand("disablechat")).setTabCompleter(new TabComplete());
 
         // Vérification et activation des dépendances
         if (!setupPlaceHolderAPI()) {
-            getLogger().warning("PlaceHolderAPI not found, local chat will not work!");
+            getLogger().warning("PlaceHolderAPI not found, roleplay chat will not work!");
         }
         if(!setupLuckPermsAPI()) {
             getLogger().warning("LuckPermsAPI not found, prefix in chat will not work!");
