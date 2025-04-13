@@ -3,11 +3,12 @@ __Liste de commandes__ :
 
 **_Plugin : Config_**
 - **``/chatplugin reload``** : reload le fichier config.yml du plugin.
-- **``/disablechat <enabled/disabled>``** : Désactive/Réactive le chat HRP (enabled : chat HRP on / disabled : chat HRP off).
-- **``/staffchat <message>``** : [STAFF] Envoie d’un message à tous les staff connectés.
+- **``/disablechat <info/enabled/disabled>``** : Désactive/Réactive le chat HRP (enabled : chat HRP on / disabled : chat HRP off).
+- **``/staffchat <on/off/message>``** : [STAFF] Envoie d’un message à tous les staff connectés.
 
 **_RolePlay_**
-- **``/me``** : action RolePlay
+- **``/me [radius] <action>``** : Faire une action RolePlay.
+- **``/anonyme [radius] <action>``** : Faire une action RolePlay anonyme.
 - **``/roll``** : roulette de 0 à 100
 
 - **``/statut <info/message> [player]``** : *[PAYANT]* Personnalise le message de connexion du joueur. (OP sont permis aussi).
