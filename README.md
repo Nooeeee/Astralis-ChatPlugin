@@ -1,4 +1,6 @@
 # Plugin *Astralis* : __[Chat]__
+Le plugin de conversation du serveur RolePlay Astralis (Black Clover RP) qui est en développement.
+
 __Liste de commandes__ :
 
 **_Plugin : Config_**
